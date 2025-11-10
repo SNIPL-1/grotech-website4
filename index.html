@@ -3,143 +3,93 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GROTECH | SNI Pvt Ltd</title>
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
+  <title>SNI Pvt Ltd | Grotech Product Catalogue</title>
+
+  <!-- External Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <style>
+    body { font-family: "Poppins", sans-serif; margin: 0; background: #fafafa; }
+    header { background: #004aad; color: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { font-size: 20px; margin: 0; }
+    header nav button { background: #fff; border: none; color: #004aad; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 500; }
+    header nav button:hover { background: #dfe7ff; }
+
+    main { padding: 20px; }
+    #breadcrumb { margin-bottom: 10px; }
+    .back-btn { background: #eee; border: none; padding: 6px 10px; cursor: pointer; border-radius: 5px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+    .card { background: #fff; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; overflow: hidden; transition: transform 0.2s ease; }
+    .card:hover { transform: scale(1.03); }
+    .card-image { width: 100%; height: 160px; object-fit: cover; }
+    .card-title { padding: 10px; font-weight: 600; font-size: 15px; text-align: center; }
+    .card-code { font-size: 13px; color: #666; text-align: center; margin-bottom: 10px; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+    th { background: #f3f3f3; }
+
+    .wa-link { color: #25d366; text-decoration: none; margin-left: 8px; }
+
+    #cart-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; }
+    #cart-modal .modal-content { background: #fff; padding: 20px; border-radius: 8px; width: 90%; max-width: 400px; }
+
+    footer { background: #004aad; color: #fff; text-align: center; padding: 12px; font-size: 14px; margin-top: 30px; }
+  </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="navbar">
-    <div class="container nav-content">
-      <div class="logo">GROTECH</div>
-      <nav class="nav-links">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#products">Products</a>
-        <a href="#enquiry">Enquiry</a>
-        <a href="#contact">Contact</a>
-        <a href="#cart" class="cart-btn">🛒 Cart</a>
-      </nav>
-    </div>
+
+  <header>
+    <h1>Grotech Catalogue</h1>
+    <nav>
+      <button onclick="showSection('products')">Products</button>
+      <button onclick="showSection('cart')">Cart (<span id="cart-count">0</span>)</button>
+      <input id="searchInput" type="text" placeholder="Search..." style="margin-left:10px;padding:4px 8px;">
+      <button onclick="performSearch()">Search</button>
+    </nav>
   </header>
 
-  <!-- Hero Section -->
-  <section id="home" class="hero">
-    <div class="hero-content">
-      <h1>Leading Exporters of Premium Tools</h1>
-      <p>Quality tools for professionals worldwide. Trusted by industries across the globe since 2012</p>
-      <h2>Hand Tools • Garden Tools • Automotive Tools • Mason Tools • Scaffolding Accessories</h2>
-      <div class="hero-buttons">
-        <a href="#products" class="btn-primary">Explore Products</a>
-        <a href="#enquiry" class="btn-secondary">Get Quote</a>
-      </div>
-    </div>
-  </section>
+  <main>
+    <div id="breadcrumb"></div>
 
-  <!-- About Section -->
-  <section id="about" class="about section">
-    <div class="container">
-      <h2>About Us</h2>
-      <p>At Sri Neelkanth Impex Pvt. Ltd., we are dedicated to manufacturing and exporting a wide range of hand tools, garden tools, and hardware under our brand name GROTECH. With decades of experience and a focus on quality, innovation, and service, we supply to wholesalers and retailers globally.</p>
-    </div>
-  </section>
-
-  <!-- Products Section -->
-  <section id="products" class="products section">
-    <div class="container">
-      <h2>Our Products</h2>
-      <div id="product-grid" class="product-grid">
-        <!-- Products dynamically inserted by script.js -->
+    <!-- Products Section -->
+    <section id="products">
+      <div id="catalogue">
+        <p>Loading products...</p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Enquiry Section -->
-  <section id="enquiry" class="enquiry section">
-    <div class="container">
-      <h2>Send Us an Enquiry</h2>
-      <form id="enquiry-form">
-        <input type="text" id="name" placeholder="Your Name" required />
-        <input type="email" id="email" placeholder="Email" required />
-        <input type="tel" id="phone" placeholder="Phone" required />
-        <textarea id="message" placeholder="Your Message" required></textarea>
-        <button type="submit" class="btn-primary">Submit Enquiry</button>
-      </form>
-    </div>
-  </section>
+    <!-- Cart Section -->
+    <section id="cart" style="display:none;">
+      <h2>Your Cart</h2>
+      <div id="cart-contents"></div>
+      <button onclick="downloadCartPDF()">Download PDF</button>
+      <button onclick="openCartEnquiryModal()">Send via WhatsApp</button>
+      <button onclick="clearCart()">Clear Cart</button>
+    </section>
+  </main>
 
-  <!-- Contact Section -->
-  <section id="contact" class="contact section">
-    <div class="container contact-grid">
-      <div>
-        <h3>Contact Us</h3>
-        <p>📍 E-47, Focal Point, Patiala, Punjab, India</p>
-        <p>📞 +91-98726-99960</p>
-        <p>✉️ info@snipvtltd.com</p>
-      </div>
-      <div>
-        <h3>Follow Us</h3>
-        <p>Instagram | Facebook | LinkedIn</p>
-      </div>
+  <!-- Cart Enquiry Modal -->
+  <div id="cart-modal">
+    <div class="modal-content">
+      <h3>Cart Enquiry</h3>
+      <input id="cart-cust-name" type="text" placeholder="Your Name" style="width:100%;margin-bottom:8px;"><br>
+      <input id="cart-cust-mobile" type="text" placeholder="Mobile" style="width:100%;margin-bottom:8px;"><br>
+      <input id="cart-cust-email" type="text" placeholder="Email (optional)" style="width:100%;margin-bottom:8px;"><br>
+      <input id="cart-cust-city" type="text" placeholder="City" style="width:100%;margin-bottom:8px;"><br>
+      <button onclick="sendCartEnquiry()">Send Enquiry</button>
+      <button onclick="closeCartModal()">Cancel</button>
     </div>
-  </section>
+  </div>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container footer-content">
-      <p>© 2025 SNI Pvt Ltd | GROTECH. All rights reserved.</p>
-      <div class="footer-links">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#products">Products</a>
-        <a href="#enquiry">Enquiry</a>
-        <a href="#contact">Contact</a>
-      </div>
-    </div>
+  <footer>
+    © 2025 SNI Pvt Ltd (Grotech). All Rights Reserved.
   </footer>
+
+  <!-- Your JavaScript File -->
+  <script defer src="script.js"></script>
 </body>
 </html>
-
-<!-- style.css -->
-<style>
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
-body { color: #333; line-height: 1.6; }
-.container { width: 90%; max-width: 1200px; margin: auto; }
-
-.navbar { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
-.nav-content { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
-.logo { font-size: 1.5rem; font-weight: bold; color: #0056b3; }
-.nav-links a { margin: 0 0.75rem; text-decoration: none; color: #333; font-weight: 500; }
-.nav-links a:hover { color: #0056b3; }
-
-.hero { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.4)), url('hero-bg.jpg') center/cover no-repeat; color: #fff; text-align: center; padding: 8rem 1rem; }
-.hero h1 { font-size: 2.8rem; margin-bottom: 1rem; }
-.hero p { font-size: 1.2rem; margin-bottom: 2rem; }
-.btn-primary, .btn-secondary { padding: 0.8rem 1.5rem; border: none; cursor: pointer; font-weight: 600; border-radius: 5px; text-decoration: none; }
-.btn-primary { background-color: #0056b3; color: #fff; }
-.btn-secondary { background-color: #fff; color: #0056b3; }
-.btn-primary:hover { background: #003f82; }
-.btn-secondary:hover { background: #e0e0e0; }
-
-.section { padding: 5rem 0; }
-.section h2 { text-align: center; font-size: 2rem; color: #0056b3; margin-bottom: 2rem; }
-
-.about p { max-width: 800px; margin: auto; text-align: center; }
-
-.product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-.product-card { border: 1px solid #ddd; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; transition: transform 0.3s; }
-.product-card:hover { transform: translateY(-5px); }
-.product-card img { width: 100%; height: 200px; object-fit: cover; }
-.product-card h4 { padding: 1rem; font-size: 1.2rem; color: #333; }
-
-#enquiry-form { display: flex; flex-direction: column; gap: 1rem; max-width: 500px; margin: auto; }
-#enquiry-form input, #enquiry-form textarea { padding: 0.75rem; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; }
-#enquiry-form button { width: fit-content; align-self: center; }
-
-.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-.contact h3 { margin-bottom: 1rem; color: #0056b3; }
-
-.footer { background: #111; color: #fff; padding: 1.5rem 0; text-align: center; }
-.footer a { color: #fff; margin: 0 0.5rem; text-decoration: none; }
-.footer a:hover { color: #bbb; }
-</style>
