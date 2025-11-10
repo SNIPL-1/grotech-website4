@@ -1,0 +1,230 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  color: #333;
+  background: #f9fbfd;
+}
+
+/* Navbar */
+.navbar {
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.nav-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo h2 {
+  color: #0072ce;
+  margin-bottom: 2px;
+}
+.logo p {
+  font-size: 12px;
+  color: #666;
+}
+nav ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+nav a:hover {
+  color: #0072ce;
+}
+.cart-btn {
+  background: #0072ce;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 6rem 2rem;
+  background: linear-gradient(to bottom, #f8fbff, #ffffff);
+}
+.hero h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+.hero h1 span {
+  color: #0072ce;
+}
+.hero .tagline {
+  margin-top: 0.75rem;
+  font-weight: 500;
+}
+.hero .subtext {
+  color: #555;
+  margin-top: 0.5rem;
+}
+.hero-buttons {
+  margin-top: 1.5rem;
+}
+.btn {
+  text-decoration: none;
+  border-radius: 25px;
+  padding: 10px 24px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.primary {
+  background: #0072ce;
+  color: #fff;
+}
+.primary:hover {
+  background: #005ea6;
+}
+.outline {
+  border: 2px solid #0072ce;
+  color: #0072ce;
+  margin-left: 10px;
+}
+.outline:hover {
+  background: #0072ce;
+  color: white;
+}
+
+/* Category Cards */
+.category-grid {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.category-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  width: 180px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.category-card h4 {
+  margin-top: 10px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Products */
+.products {
+  text-align: center;
+  padding: 5rem 2rem;
+  background: #fff;
+}
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.product-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.center {
+  margin-top: 2rem;
+}
+
+/* Enquiry */
+.enquiry {
+  text-align: center;
+  padding: 5rem 2rem;
+  background: #f9fbfd;
+}
+.enquiry form {
+  max-width: 500px;
+  margin: 2rem auto;
+  text-align: left;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.enquiry label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+.enquiry input,
+.enquiry textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+.full {
+  width: 100%;
+}
+
+/* Contact */
+.contact {
+  padding: 5rem 2rem;
+  text-align: center;
+}
+.contact-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+.contact-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  width: 260px;
+}
+
+/* Footer */
+footer {
+  background: #f1f5f9;
+  padding: 2rem;
+  text-align: center;
+}
+.footer-content {
+  max-width: 1000px;
+  margin: auto;
+}
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+.footer-links a {
+  text-decoration: none;
+  color: #0072ce;
+}
+.footer-copy {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+}
